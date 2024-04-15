@@ -1,8 +1,6 @@
 // reducer types
 export type ReviewsReducerType={
-  review:{
-    id: number
+     id: number
     text:string
-  }
 
 }

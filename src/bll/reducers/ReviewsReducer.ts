@@ -1,14 +1,15 @@
 import { ReviewsReducerType } from "types/types";
-import { AppThunkType } from "bll/store";
-import { ContentApi } from "dal/api/Content-api";
+import { SetReviewsType } from "bll/actions/reviews-actions";
 
 
 export const reviewsReducerState = {} as ReviewsReducerType
 
-
-export const ReviewsReducer =(state:ReviewsReducerType = reviewsReducerState,action:any):ReviewsReducerType=>{
+export type ReviewsReducerActionsType = SetReviewsType
+export const ReviewsReducer =(state:ReviewsReducerType = reviewsReducerState,action:ReviewsReducerActionsType):ReviewsReducerType=>{
 switch (action.type){
-
+  case "SET-REVIEWS":{
+    return {...state,...action.data}
+  }
   default:return state
 }
 
