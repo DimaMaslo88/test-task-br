@@ -5,13 +5,12 @@ import { SetReviews } from "dal/thunk/ReviewsThunk";
 
 export const Header = () => {
   const dispatch = useAppDispatch()
-  useEffect(()=>{
-    dispatch(SetReviews())
 
-  },[])
+
+
     return (
         <div className={style.headerContainer}>
-            <h1 className={style.title}>Тестовое задание</h1>
+hello
         </div>
     );
 };

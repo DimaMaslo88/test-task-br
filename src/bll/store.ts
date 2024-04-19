@@ -2,11 +2,12 @@ import {applyMiddleware, combineReducers, legacy_createStore as createStore} fro
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 
 import {useDispatch} from "react-redux";
-import { ReviewsReducer, ReviewsReducerActionsType } from "./reducers/ReviewsReducer";
+import { TableReducer, TableReducerActionsType } from "bll/reducers/TableReducer";
+
 
 
 const rootReducer = combineReducers({
-   reviews:ReviewsReducer
+   table:TableReducer
 })
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType,
     StateType,
@@ -15,7 +16,7 @@ export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType,
 export type AppDispatch = ThunkDispatch<StateType,
     undefined,
     ActionStateType>;
-export type ActionStateType = ReviewsReducerActionsType
+export type ActionStateType = TableReducerActionsType
 export type StateType = ReturnType<typeof rootReducer>
 export const useAppDispatch = (): AppDispatch => useDispatch<AppDispatch>()
 export const store = createStore(rootReducer, applyMiddleware(thunk))

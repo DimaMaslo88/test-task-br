@@ -1,7 +1,8 @@
-import { ReviewsReducerType } from "types/types";
+import { TableReducerType } from "types/types";
+
 
 export type SetReviewsType = ReturnType<typeof setReviews>
-export const setReviews =(data:ReviewsReducerType)=>{
+export const setReviews =(data:TableReducerType)=>{
   return{
     type:'SET-REVIEWS',
     data
