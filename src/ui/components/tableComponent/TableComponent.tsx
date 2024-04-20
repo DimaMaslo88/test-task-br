@@ -4,7 +4,7 @@ import style from 'styles/TableContainer.module.css'
 import LinearIndeterminateProgress from "ui/utils/progress/Progress";
 import { useSelector } from "react-redux";
 import { selectIsLoading, selectTableParams } from "bll/selectors/Selectors";
-
+import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined';
 
 export const TableComponent = () => {
   const isLoading = useSelector(selectIsLoading);
@@ -17,9 +17,9 @@ export const TableComponent = () => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table" >
         <TableHead>
           <TableRow className={style.tableHeader}>
-            <TableCell>За <br/>период</TableCell>
-            <TableCell align="right">Год</TableCell>
-            <TableCell align="right">Организация</TableCell>
+            <TableCell>За <br/>период</TableCell> <FilterListOutlinedIcon/>
+            <TableCell align="right">Год</TableCell> <FilterListOutlinedIcon/>
+            <TableCell align="right">Организация</TableCell> <FilterListOutlinedIcon/>
           </TableRow>
         </TableHead>
         <TableBody>

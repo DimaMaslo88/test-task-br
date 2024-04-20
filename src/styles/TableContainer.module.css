@@ -1,9 +1,8 @@
 .tableContainer{
 
 }
-
 .tableHeader{
-
+display: flex;
     background-color: lightskyblue;
 
 }
