@@ -1,11 +1,11 @@
 import { AppThunkType } from "bll/store";
 import { ContentApi } from "dal/api/Content-api";
-import { setReviews } from "bll/actions/reviews-actions";
+import {  setTableData } from "bll/actions/reviews-actions";
 
-export const SetReviews =():AppThunkType=>async(dispatch)=>{
+export const SetTableData =():AppThunkType=>async(dispatch)=>{
   try{
-    const res = await ContentApi.getReviews()
-    dispatch(setReviews(res.data))
+    const res = await ContentApi.getHeaderData()
+   // dispatch(setTableData(res.data))
     console.log(res.data)
   }catch (err){
     console.log(err)

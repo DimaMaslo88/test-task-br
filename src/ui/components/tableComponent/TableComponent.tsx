@@ -21,11 +21,11 @@ const rows = [
 ];
 export const TableComponent = () => {
   return (
-    <TableContainer component={Paper} >
+    <TableContainer component={Paper}  className={style.tableContainer}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table" >
         <TableHead>
           <TableRow className={style.tableHeader}>
-            <TableCell>За период</TableCell>
+            <TableCell>За <br/>период</TableCell>
             <TableCell align="right">Год</TableCell>
             <TableCell align="right">Организация</TableCell>
           </TableRow>
