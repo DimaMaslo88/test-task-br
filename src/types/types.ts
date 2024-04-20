@@ -8,5 +8,9 @@ export type TableReducerType={
   rep_end_period:string,
   update_date:string,
   update_user:string
+}
 
+// appReducer types
+export type appReducerType={
+  isLoading:boolean
 }

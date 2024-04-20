@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL:'olegegoism.pythonanywhere.com/',
+  baseURL:'https://olegegoism.pythonanywhere.com/',
   headers: {
     'Content-Type': 'application/json'
   }
