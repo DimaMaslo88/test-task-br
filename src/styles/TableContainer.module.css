@@ -1,6 +1,10 @@
 .tableContainer{
 
 }
+.filterIcon{
+  margin-left: 10px;
+    cursor: pointer;
+}
 .tableHeader{
 display: flex;
     background-color: lightskyblue;
