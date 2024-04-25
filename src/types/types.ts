@@ -14,3 +14,6 @@ export type TableReducerType={
 export type appReducerType={
   isLoading:boolean
 }
+
+// sortTable type
+export type SortValueType = 'period'|'year'|'org'

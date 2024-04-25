@@ -5,29 +5,82 @@ import LinearIndeterminateProgress from "ui/utils/progress/Progress";
 import { useSelector } from "react-redux";
 import { selectIsLoading, selectTableParams } from "bll/selectors/Selectors";
 import FilterListOutlinedIcon from "@mui/icons-material/FilterListOutlined";
+import { SortValueType } from "types/types";
+
 
 export const TableComponent = () => {
   const isLoading = useSelector(selectIsLoading);
   const tableData = useSelector(selectTableParams);
-  const [isSorting,setIsSorting] = useState<boolean>(false)
-  const sortHandler = ()=>{
-    setIsSorting(!isSorting)
+  const [ascendingYear, setAscendingYear] = useState<boolean>(false);
+  const [ascendingPeriod, setAscendingPeriod] = useState<boolean>(false);
+  const [sort, setSort] = useState<SortValueType>();
+
+
+  const sortingTableByYear = () => {
+    setSort("year");
+    setAscendingYear(!ascendingYear);
+  };
+  const sortingTableByPeriod =()=>{
+    setSort('period')
+    setAscendingPeriod(!ascendingPeriod)
   }
+  let newTableData = tableData;
+  if (sort === "year") {
+    newTableData = [...tableData].sort((a, b) => {
+      if (a.insert_date < b.insert_date) {
+        return ascendingYear ? -1 : 1;
+      }
+      if (a.insert_date > b.insert_date) {
+        return ascendingYear ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+  if(sort === "period"){
+    newTableData = [...tableData].sort((a,b)=>{
+      if(a.rep_beg_period < b.rep_end_period){
+        return ascendingPeriod ? -1:1;
+      }
+      if(a.rep_beg_period > b.rep_end_period){
+        return ascendingPeriod ? 1:-1
+      }
+      return  0
+    })
+  }
+  // const sortingTable = [...tableData].sort((a, b) => {
+  //   const [aMonth1, aMonth2] = a.rep_beg_period.split("-");
+  //   const [bMonth1, bMonth2] = b.rep_end_period.split("-");
+  //
+  //   if (aMonth1 !== bMonth1) {
+  //     return aMonth1.localeCompare(bMonth1);
+  //   }
+  //   return aMonth2.localeCompare(bMonth2);
+  //
+  // });
+
   if (isLoading) {
     return <LinearIndeterminateProgress />;
   }
+
   return (
     <TableContainer component={Paper} className={style.tableContainer}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow className={style.tableHeader}>
-            <TableCell >За <br />период <FilterListOutlinedIcon className={style.filterIcon} onClick={sortHandler} /></TableCell>
-            <TableCell align="right">Год <FilterListOutlinedIcon className={style.filterIcon} /></TableCell>
-            <TableCell align="right">Организация <FilterListOutlinedIcon className={style.filterIcon} /></TableCell>
+            <TableCell >За <br />период <FilterListOutlinedIcon className={style.filterIcon}
+                                                                onClick={sortingTableByPeriod}
+            />
+            </TableCell>
+            <TableCell align="right" >Год <FilterListOutlinedIcon className={style.filterIcon}
+                                                                  onClick={sortingTableByYear} />
+            </TableCell>
+            <TableCell align="right" >Организация <FilterListOutlinedIcon className={style.filterIcon}
+            />
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableData.map((data) => (
+          {newTableData.map((data) => (
             <TableRow
               key={data.f_pers_young_spec_id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -43,8 +96,8 @@ export const TableComponent = () => {
         </TableBody>
       </Table>
     </TableContainer>
-
   );
+
 
 };
 
