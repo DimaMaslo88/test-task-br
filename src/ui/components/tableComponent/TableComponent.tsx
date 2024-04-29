@@ -14,16 +14,16 @@ export const TableComponent = () => {
   const [ascendingYear, setAscendingYear] = useState<boolean>(false);
   const [ascendingPeriod, setAscendingPeriod] = useState<boolean>(false);
   const [sort, setSort] = useState<SortValueType>();
-
+  const [selected, setSelected] = useState<number|null>(null);
 
   const sortingTableByYear = () => {
     setSort("year");
     setAscendingYear(!ascendingYear);
   };
-  const sortingTableByPeriod =()=>{
-    setSort('period')
-    setAscendingPeriod(!ascendingPeriod)
-  }
+  const sortingTableByPeriod = () => {
+    setSort("period");
+    setAscendingPeriod(!ascendingPeriod);
+  };
   let newTableData = tableData;
   if (sort === "year") {
     newTableData = [...tableData].sort((a, b) => {
@@ -36,16 +36,16 @@ export const TableComponent = () => {
       return 0;
     });
   }
-  if(sort === "period"){
-    newTableData = [...tableData].sort((a,b)=>{
-      if(a.rep_beg_period < b.rep_end_period){
-        return ascendingPeriod ? -1:1;
+  if (sort === "period") {
+    newTableData = [...tableData].sort((a, b) => {
+      if (a.rep_beg_period < b.rep_end_period) {
+        return ascendingPeriod ? -1 : 1;
       }
-      if(a.rep_beg_period > b.rep_end_period){
-        return ascendingPeriod ? 1:-1
+      if (a.rep_beg_period > b.rep_end_period) {
+        return ascendingPeriod ? 1 : -1;
       }
-      return  0
-    })
+      return 0;
+    });
   }
   // const sortingTable = [...tableData].sort((a, b) => {
   //   const [aMonth1, aMonth2] = a.rep_beg_period.split("-");
@@ -57,6 +57,9 @@ export const TableComponent = () => {
   //   return aMonth2.localeCompare(bMonth2);
   //
   // });
+  const onClickHandler = (id:number|null) => {
+    setSelected(id);
+  };
 
   if (isLoading) {
     return <LinearIndeterminateProgress />;
@@ -67,14 +70,14 @@ export const TableComponent = () => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow className={style.tableHeader}>
-            <TableCell >За <br />период <FilterListOutlinedIcon className={style.filterIcon}
-                                                                onClick={sortingTableByPeriod}
+            <TableCell>За <br />период <FilterListOutlinedIcon className={style.filterIcon}
+                                                               onClick={sortingTableByPeriod}
             />
             </TableCell>
-            <TableCell align="right" >Год <FilterListOutlinedIcon className={style.filterIcon}
-                                                                  onClick={sortingTableByYear} />
+            <TableCell align="right">Год <FilterListOutlinedIcon className={style.filterIcon}
+                                                                 onClick={sortingTableByYear} />
             </TableCell>
-            <TableCell align="right" >Организация <FilterListOutlinedIcon className={style.filterIcon}
+            <TableCell align="right">Организация <FilterListOutlinedIcon className={style.filterIcon}
             />
             </TableCell>
           </TableRow>
@@ -82,8 +85,10 @@ export const TableComponent = () => {
         <TableBody>
           {newTableData.map((data) => (
             <TableRow
+              onClick={()=>onClickHandler(data.f_pers_young_spec_id)}
               key={data.f_pers_young_spec_id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              className={selected === data.f_pers_young_spec_id ? style.tableRowActive :style.tableRow}
             >
               <TableCell component="th" scope="row">
                 {`${new Date(data.rep_beg_period).toLocaleString("default", { month: "long" })} 
