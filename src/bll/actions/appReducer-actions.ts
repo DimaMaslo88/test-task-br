@@ -5,3 +5,10 @@ export const setIsLoading = (isLoading:boolean)=>{
     isLoading
   }as const
 }
+export type SetCurrentPage =ReturnType<typeof setCurrentPage>
+export const setCurrentPage = (page:number)=>{
+  return {
+    type:'SET-CURRENT-PAGE',
+    page
+  }as const
+}

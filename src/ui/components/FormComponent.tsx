@@ -2,20 +2,26 @@ import React, { useEffect } from "react";
 import { useAppDispatch } from "bll/store";
 import { SetFormForYoungSpec, SetFormLineForYoungSpec } from "dal/thunk/ContentThunk";
 import { useSelector } from "react-redux";
-import { selectFormParams } from "bll/selectors/Selectors";
+import { selectFormParams, selectIsLoading, selectLineParams } from "bll/selectors/Selectors";
 import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import style from "styles/TableContainer.module.css";
+import LinearIndeterminateProgress from "ui/utils/progress/Progress";
 
 
 export const FormComponent = () => {
   const dispatch = useAppDispatch();
-  const formdata = useSelector(selectFormParams);
+  const formLineData = useSelector(selectLineParams);
+  const formData = useSelector(selectFormParams)
+  const isLoading = useSelector(selectIsLoading);
   useEffect(()=>{
     dispatch(SetFormLineForYoungSpec())
-  })
+  },[])
   useEffect(() => {
     dispatch(SetFormForYoungSpec());
   }, []);
+  // if (isLoading) {
+  //   return <LinearIndeterminateProgress />;
+  // }
   return (
     <TableContainer component={Paper} className={style.tableContainer}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -39,15 +45,27 @@ export const FormComponent = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {formdata.map((data) => (
+          {formLineData.map((data) => (
             <TableRow
-              key={data.f_pers_young_spec_line_id}
+              key={data.nsi_pers_young_spec_id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
 
             >
-              <TableCell component="th" scope="row" > </TableCell>
-              <TableCell align="right" />
-              <TableCell align="right" />
+              <TableCell component="th" scope="row" >{data.name} </TableCell>
+              <TableCell align="right" > hello</TableCell>
+              <TableCell align="right" >
+                {formData.map((fdata)=>(
+                  <Grid container>
+                    <Grid item xs={4}>
+                      {fdata.distribution_count}
+                    </Grid>
+                    <Grid item xs={4}>
+                      {fdata.target_count}
+                    </Grid>
+                  </Grid>
+                ))}
+
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
