@@ -1,13 +1,15 @@
 import { appReducerType } from "types/types";
-import { SetCurrentPage, SetIsLoadingType } from "bll/actions/appReducer-actions";
+import { SetCurrentPage, SetIdType, SetIsLoadingType } from "bll/actions/appReducer-actions";
 
 const appReducerState={
   isLoading: false,
-  currentPage:1
+  currentPage:1,
+  id:null
 }
 
 export type AppReducerTypes = SetIsLoadingType
 |SetCurrentPage
+|SetIdType
 export const AppReducer = (state:appReducerType=appReducerState,action:AppReducerTypes):appReducerType=>{
   switch (action.type){
     case "SET-IS-LOADING":{
@@ -15,6 +17,9 @@ export const AppReducer = (state:appReducerType=appReducerState,action:AppReduce
     }
     case "SET-CURRENT-PAGE":{
       return {...state,currentPage:action.page}
+    }
+    case "SET-ID":{
+      return {...state,id:action.id}
     }
     default:return state
   }

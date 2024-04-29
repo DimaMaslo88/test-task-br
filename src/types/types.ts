@@ -31,6 +31,7 @@ export type FormLineReducerType = {
 export type appReducerType = {
   isLoading: boolean
   currentPage:number
+  id:number|null
 }
 
 // sortTable type

@@ -12,3 +12,10 @@ export const setCurrentPage = (page:number)=>{
     page
   }as const
 }
+export type SetIdType =ReturnType<typeof setId>
+export const setId = (id:number|null)=>{
+  return {
+    type:'SET-ID',
+    id
+  }as const
+}

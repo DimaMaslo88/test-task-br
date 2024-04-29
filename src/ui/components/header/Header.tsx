@@ -5,10 +5,14 @@ import ButtonHeader from "ui/utils/button/Button";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import FilterListOffOutlinedIcon from '@mui/icons-material/FilterListOffOutlined';
 import DehazeOutlinedIcon from '@mui/icons-material/DehazeOutlined';
-import { SetTableDataThunk } from "dal/thunk/ContentThunk";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const dispatch = useAppDispatch();
+  const navigator = useNavigate()
+  const navigateToForm = ()=>{
+    navigator('form')
+  }
 const reloadPageHandler = ()=>{
  window.location.reload()
 }

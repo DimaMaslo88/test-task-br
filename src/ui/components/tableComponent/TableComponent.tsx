@@ -3,21 +3,25 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import style from "styles/TableContainer.module.css";
 import LinearIndeterminateProgress from "ui/utils/progress/Progress";
 import { useSelector } from "react-redux";
-import { selectCurrentPage, selectIsLoading, selectTableParams } from "bll/selectors/Selectors";
+import { selectCurrentPage, selectIsLoading, selectTableId, selectTableParams } from "bll/selectors/Selectors";
 import FilterListOutlinedIcon from "@mui/icons-material/FilterListOutlined";
 import { SortValueType } from "types/types";
 import PaginationControlled from "ui/components/pagination/contentPagination";
+import { useAppDispatch } from "bll/store";
+import { setId } from "bll/actions/appReducer-actions";
 
 export const TableComponent = () => {
+  const dispatch = useAppDispatch()
   const isLoading = useSelector(selectIsLoading);
   const tableData = useSelector(selectTableParams);
+  const tableId = useSelector(selectTableId)
   const [ascendingYear, setAscendingYear] = useState<boolean>(false);
   const [ascendingPeriod, setAscendingPeriod] = useState<boolean>(false);
   const [sort, setSort] = useState<SortValueType>();
   const [selected, setSelected] = useState<number|null>(null);
   const currentPage = useSelector(selectCurrentPage)
   const totalItems = tableData.length
-  const elementOnPage = 5
+  const elementOnPage = 10
   const lastPostIndex = currentPage * elementOnPage
   const firstPostIndex = lastPostIndex - elementOnPage
   const currentTableData = tableData.slice(firstPostIndex,lastPostIndex)
@@ -52,18 +56,10 @@ export const TableComponent = () => {
       return 0;
     });
   }
-  // const sortingTable = [...tableData].sort((a, b) => {
-  //   const [aMonth1, aMonth2] = a.rep_beg_period.split("-");
-  //   const [bMonth1, bMonth2] = b.rep_end_period.split("-");
-  //
-  //   if (aMonth1 !== bMonth1) {
-  //     return aMonth1.localeCompare(bMonth1);
-  //   }
-  //   return aMonth2.localeCompare(bMonth2);
-  //
-  // });
+
   const onClickHandler = (id:number|null) => {
     setSelected(id);
+    dispatch(setId(id))
   };
 
   if (isLoading) {
